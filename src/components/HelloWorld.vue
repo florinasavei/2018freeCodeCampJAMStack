@@ -16,8 +16,11 @@
           </v-layout>
         <div class="wrapper">
           <div v-if="data" id="example-1">
-            <div v-for="item in data">
-              <img v-if="item.Poster" v-bind:src="item.Poster"/>
+            <div v-for="movie in data">
+              <img v-if="movie.Poster" v-bind:src="movie.Poster"/>
+              <v-flex xs12 sm2 md2>
+                <v-btn id="btn" class="" v-on:click="addToFavorites(movie)">Add ti favorites</v-btn>
+            </v-flex>
             </div>
           </div>
         </div>
@@ -43,6 +46,11 @@ export default {
         .then((response) => {
           this.data = response.data.Search;
         })
+    },
+    addToFavorites: function(movie){
+      console.log('movie', movie);
+      this.$store.state.myFavoriteMovies.push(movie);
+       console.log('movies lost', this.$store.state.myFavoriteMovies);
     }
   }
 }
