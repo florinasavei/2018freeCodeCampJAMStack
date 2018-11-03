@@ -1,14 +1,24 @@
 <template>
   <div id="app">
-      <header>Axios</header>
       <main>
-        <h2>Click the button to get a movie</h2>
-        <button id="btn" class="" v-on:click="getData">Get</button>
-        <div v-if="loading">Loading .. </div>
+        <v-container>
+           <v-layout row wrap>
+             <v-flex xs3 sm3 md3>
+               </v-flex>
+            <v-flex xs12 sm4 md4>
+              <v-text-field v-model="movie"
+                label="Movie name"
+              ></v-text-field>
+            </v-flex>
+            <v-flex xs12 sm2 md2>
+                <v-btn id="btn" class="" v-on:click="getData">Find movie</v-btn>
+            </v-flex>
+          </v-layout>
         <div class="wrapper">
-          <p v-if="movie">{{ movie }}</p>
           <img v-if="poster" v-bind:src="poster"/>
         </div>
+
+          </v-container>
       </main>
   </div>
 </template>
@@ -20,19 +30,19 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      movie: '',
+      movie: [],
       poster: '',
-      loading: false
+      showMovieText: false
     }
   },
   methods: {
     getData: function () {
-      this.loading = true;
-      axios.get('http://www.omdbapi.com/?t=serenity&apikey=93d8cda4')
+      axios.get('http://www.omdbapi.com/?s=' + this.movie +'&apikey=93d8cda4')
         .then((response) => {
-          this.loading = false;
           this.movie = response.data.Title;
           this.poster = response.data.Poster;
+          this.showMovieText = true;
+          console.log(response.search);
         })
     }
   }
