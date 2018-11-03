@@ -15,7 +15,7 @@
             </v-flex>
           </v-layout>
         <div class="wrapper">
-          <img v-if="poster" v-bind:src="poster"/>
+          <img v-if="data[0].Poster" v-bind:src="data[0].Poster"/>
         </div>
 
           </v-container>
@@ -30,19 +30,15 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      movie: [],
-      poster: '',
-      showMovieText: false
+     data: [],
     }
   },
   methods: {
     getData: function () {
       axios.get('http://www.omdbapi.com/?s=' + this.movie +'&apikey=93d8cda4')
         .then((response) => {
-          this.movie = response.data.Title;
-          this.poster = response.data.Poster;
-          this.showMovieText = true;
-          console.log(response.search);
+          this.data = response.data.Search;
+          debugger;
         })
     }
   }
