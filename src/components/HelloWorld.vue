@@ -15,9 +15,12 @@
             </v-flex>
           </v-layout>
         <div class="wrapper">
-          <img v-if="data[0].Poster" v-bind:src="data[0].Poster"/>
+          <div v-if="data" id="example-1">
+            <div v-for="item in data">
+              <img v-if="item.Poster" v-bind:src="item.Poster"/>
+            </div>
+          </div>
         </div>
-
           </v-container>
       </main>
   </div>
@@ -31,6 +34,7 @@ export default {
   data () {
     return {
      data: [],
+      movie: ''
     }
   },
   methods: {
@@ -38,7 +42,6 @@ export default {
       axios.get('http://www.omdbapi.com/?s=' + this.movie +'&apikey=93d8cda4')
         .then((response) => {
           this.data = response.data.Search;
-          debugger;
         })
     }
   }
