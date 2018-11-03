@@ -54,7 +54,9 @@
       },
       addToFavorites: function (movie) {
         console.log('movie', movie);
+
         this.$store.state.myFavoriteMovies.push(movie);
+        
         console.log('movies lost', this.$store.state.myFavoriteMovies);
         EventBus.$emit('i-got-clicked', this.clickCount);
       },
