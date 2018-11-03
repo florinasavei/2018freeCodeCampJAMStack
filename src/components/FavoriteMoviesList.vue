@@ -4,7 +4,7 @@
         <v-container>
           <div class="wrapper">
             <v-flex xs12 sm2 md2>
-                <v-btn id="btn" class="" v-on:click="refreshFavoriteMovies">refresh movies</v-btn>
+                <v-btn id="refreshFavoriteMoviesBtn" ref="refreshFavoriteMoviesBtn" class="" v-on:click="refreshFavoriteMovies">refresh movies</v-btn>
             </v-flex>
           <div v-if="favoriteMoviesList" id="example-1">
             <div v-for='movie in favoriteMoviesList'>
@@ -19,8 +19,18 @@
 
 <script>
 
+var callback = function(){
+  var buttonEl = document.querySelector('#refreshFavoriteMoviesBtn');
+  console.log(buttonEl);
+  buttonEl.click();
+  debugger;
+};
+
+import { EventBus } from "../event-bus.js";
+EventBus.$on("i-got-clicked", callback);
+
 export default {
-  name: 'FavoriteMoviesList',
+  name: "FavoriteMoviesList",
 
   data() {
     return {

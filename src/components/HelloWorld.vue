@@ -2,7 +2,7 @@
   <div id="app">
     <main>
       <v-container>
-        <v-form v-on:submit="submitForm" v-model="valid">
+        <v-form v-on:submit="submitForm">
           <v-layout row wrap>
             <v-flex xs3 sm3 md3>
             </v-flex>
@@ -33,13 +33,15 @@
 
 <script>
   import axios from 'axios';
+  import { EventBus } from '../event-bus.js';
 
   export default {
     name: 'HelloWorld',
     data() {
       return {
         data: [],
-        movie: ''
+        movie: '',
+        clickCount: 0
       }
     },
     methods: {
@@ -47,12 +49,14 @@
         axios.get('http://www.omdbapi.com/?s=' + this.movie + '&apikey=93d8cda4')
           .then((response) => {
             this.data = response.data.Search;
-          })
+          });
+       
       },
       addToFavorites: function (movie) {
         console.log('movie', movie);
         this.$store.state.myFavoriteMovies.push(movie);
         console.log('movies lost', this.$store.state.myFavoriteMovies);
+        EventBus.$emit('i-got-clicked', this.clickCount);
       },
       submitForm: function (event) {
         this.getData();
