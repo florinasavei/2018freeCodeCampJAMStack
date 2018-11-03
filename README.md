@@ -1,4 +1,4 @@
-# fcc-movie-watchlist
+# vue-app
 
 ## Project setup
 ```
