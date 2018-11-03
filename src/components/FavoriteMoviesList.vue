@@ -30,7 +30,6 @@ export default {
   methods: {
     refreshFavoriteMovies: function() {
       console.log(this.favoriteMoviesList);
-      debugger;
       this.favoriteMoviesList = this.$store.state.myFavoriteMovies;
     }
   }
@@ -45,5 +44,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  position: fixed;
 }
 </style>
