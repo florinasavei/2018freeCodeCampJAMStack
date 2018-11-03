@@ -23,7 +23,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
-
+import Spinner from './components/Spinner'
 export default {
   name: 'App',
   components: {
