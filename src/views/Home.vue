@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>ceva</h1>
     <FavoriteMoviesList />
     <HelloWorld />
   </div>
@@ -11,6 +10,7 @@ import HelloWorld from "../components/HelloWorld.vue";
 import FavoriteMoviesList from "../components/FavoriteMoviesList.vue";
 
 export default {
+  name: 'HomeView',
   components: {
     HelloWorld,
     FavoriteMoviesList
