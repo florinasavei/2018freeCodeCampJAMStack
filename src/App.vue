@@ -16,23 +16,26 @@
     </v-toolbar>
 
     <v-content>
+      <FavoriteMoviesList/>
       <HelloWorld/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import HelloWorld from "./components/HelloWorld";
+import FavoriteMoviesList from "./components/FavoriteMoviesList";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    HelloWorld,
+    FavoriteMoviesList
   },
-  data () {
+  data() {
     return {
       //
-    }
+    };
   }
-}
+};
 </script>
