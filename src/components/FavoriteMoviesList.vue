@@ -17,9 +17,7 @@
           <v-list>
             <v-list-tile v-for='movie in favoriteMoviesList' :key="movie.id" avatar @click="">
               <v-list-tile-avatar>
-                <v-chip>
                   <v-icon>fas fa-video</v-icon>
-                </v-chip>
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title>{{ movie.Title }}</v-list-tile-title>
