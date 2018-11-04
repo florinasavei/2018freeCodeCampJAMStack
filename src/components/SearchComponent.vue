@@ -36,6 +36,7 @@
                          height="150px"/>
                     <v-flex xs4>
                         <v-btn v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
+                        <v-btn v-if="!checkDupicate(movie.imdbID)" disabled id="btn" class="" >Allready added</v-btn>
                     </v-flex>
                     <v-dialog
                       v-model="dialog"
@@ -129,15 +130,15 @@
           });
       },
       checkDupicate: function(imdbID){
-        debugger;
+        let isDuplicate = false;
         this.favoriteMoviesList.forEach((movie) => {
           if(movie.imdbID == imdbID){
-            debugger;
-            return false;
+           
+            isDuplicate = true;
           }
         })
-        debugger;
-        return true;
+        
+        return !isDuplicate;
       },
       addToFavorites: function (movie) {
         console.log('movie', movie);
