@@ -89,7 +89,7 @@
                         </v-card-text>
 
                         <div class="text-xs-center">
-                          <v-rating v-model="currentMovieRating" length="10"></v-rating>
+                          <v-rating v-model="currentMovieRating" length="10" readonly></v-rating>
                         </div>
 
                         <v-divider></v-divider>
@@ -154,7 +154,6 @@ export default {
       );
     },
     getMovieData: function(movieId) {
-      console.log("movie", movieId);
       axios
         .get("https://www.omdbapi.com/?i=" + movieId + "&apikey=93d8cda4")
         .then(response => {
