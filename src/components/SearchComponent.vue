@@ -37,7 +37,7 @@
                     <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
                          height="150px"/>
                     <h3 class="text" v-if="movie.Title">{{movie.Title}}</h3>
-                    <button v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">
+                    <button v-if="checkDuplicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">
                           <div class="text-xs-center">
                             <v-chip>
                               <v-icon left>fas fa-plus-circle</v-icon>
@@ -46,7 +46,7 @@
                           </div>
                           </button>
 
-                          <button v-if="!checkDupicate(movie.imdbID)" disabled id="btn" class="" >
+                          <button v-if="!checkDuplicate(movie.imdbID)" disabled id="btn" class="" >
                           <div class="text-xs-center">
                             <v-chip>
                               <v-icon left>fas fa-check-circle</v-icon>
@@ -148,6 +148,7 @@ export default {
               this.protocol+"//www.omdbapi.com/?s=" + this.movie + "&apikey=93d8cda4"
             )
             .then(response => {
+              this.favoriteMoviesList = this.$store.state.myFavoriteMovies;
               this.data = response.data.Search;
               EventBus.$emit("hideSpinner", this.clickCount);
             }),
@@ -164,7 +165,8 @@ export default {
             : 0;
         });
     },
-    checkDupicate: function(imdbID) {
+    checkDuplicate: function(imdbID) {
+      this.favoriteMoviesList = this.$store.state.myFavoriteMovies;
       let isDuplicate = false;
       this.favoriteMoviesList.forEach(movie => {
         if (movie.imdbID == imdbID) {
