@@ -25,7 +25,7 @@
               <v-list-tile-action>
                 <v-layout row>
                   <v-btn icon>
-                    <v-icon  v-on:click="markAsSeen(movie.imdbID)" color="grey lighten-1">check</v-icon>
+                    <v-icon  v-on:click="markAsSeen(movie.imdbID, movie.seen)" color="grey lighten-1">check</v-icon>
                   </v-btn>
                   <v-btn icon>
                     <v-icon  v-on:click="removeFavorite(movie.imdbID)" color="grey lighten-1">delete</v-icon>
@@ -100,10 +100,12 @@ export default {
         
     },
 
-    markAsSeen: function(movieId) {
+    markAsSeen: function(movieId, isSeen) {
+
+      var seen = !!(isSeen)?false:true;
       
       var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
-      var query = `mutation update_favorite_movies {  update_favorite_movies(    where: {imdbID: {_eq: "${movieId}"}, fbUser: {_eq: "${this.$store.state.loggedUser.id}"}},    _set: {seen: true}  ) {    affected_rows  }}`;
+      var query = `mutation update_favorite_movies {  update_favorite_movies(    where: {imdbID: {_eq: "${movieId}"}, fbUser: {_eq: "${this.$store.state.loggedUser.id}"}},    _set: {seen: ${seen} }  ) {    affected_rows  }}`;
 
       var data = JSON.stringify({
         query: query,
