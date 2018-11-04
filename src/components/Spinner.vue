@@ -34,17 +34,21 @@ export default {
 
 <style>
 .spinner {
-  margin: 100px auto;
-  width: 50px;
-  height: 60px;
+  position: absolute;
+  margin-top: 120px;
+  margin-left: 25%; 
+  margin-right: 50%; 
+  width: 170px;
+  height: 180px;
   text-align: center;
   font-size: 10px;
+  z-index: 2;
 }
 
 .spinner > div {
   background-color: teal;
   height: 100%;
-  width: 6px;
+  width: 17px;
   display: inline-block;
 
   -webkit-animation: stretchdelay 1.2s infinite ease-in-out;

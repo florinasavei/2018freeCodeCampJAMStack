@@ -1,6 +1,5 @@
 <template>
   <v-layout row wrap>
-    <SpinnerComponent/>
     <v-flex xs8>
       <SearchComponent/>
     </v-flex>
@@ -19,8 +18,7 @@ export default {
   name: 'HomeView',
   components: {
     SearchComponent,
-    FavoriteMoviesList,
-    SpinnerComponent
+    FavoriteMoviesList
   }
 };
 </script>

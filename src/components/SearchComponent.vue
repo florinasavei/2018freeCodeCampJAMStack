@@ -2,6 +2,7 @@
   <div id="app">
     <main>
       <v-container>
+        <SpinnerComponent/>
         <v-form v-on:submit="submitForm">
           <v-layout row wrap>
             <v-flex xs3 sm3 md3>
@@ -50,9 +51,11 @@
 <script>
   import axios from 'axios';
   import { EventBus } from '../event-bus.js';
+  import SpinnerComponent from "../components/Spinner.vue";
 
   export default {
     name: 'SearchComponent',
+    components:{SpinnerComponent},
     data() {
       return {
         data: [],
@@ -63,11 +66,13 @@
     methods: {
       getData: function () {
         EventBus.$emit('showSpinner', this.clickCount);
+        setTimeout(() => 
         axios.get('https://www.omdbapi.com/?s=' + this.movie + '&apikey=93d8cda4')
           .then((response) => {
             this.data = response.data.Search;
             EventBus.$emit('hideSpinner', this.clickCount);
-          });
+          })
+        , 500);
       },
       addToFavorites: function (movie) {
         console.log('movie', movie);
