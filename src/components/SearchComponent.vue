@@ -24,19 +24,19 @@
             <!--<v-card>-->
             <v-container fluid>
               <v-layout row wrap>
-                <v-flex
+                <v-flex ma-1
                   v-for="(movie, index) in data"
                   :key="index"
                   xs4
                 >
-                  <v-card flat tile>
+                  <v-card>
                     <img
                       v-if="movie.Poster!='N/A'" v-bind:src="movie.Poster"
                       height="150px"
                     />
+                    <h3 class="text" v-if="movie.Title">{{movie.Title}}</h3>
                     <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
                          height="150px"/>
-                    <v-flex xs4>
                         <button v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">
                           <div class="text-xs-center">
                             <v-chip>
@@ -55,19 +55,20 @@
                           </div>
                           </button>
 
-                    </v-flex>
                     <v-dialog
                       v-model="dialog"
                       width="750"
                       light
                     >
-                      <v-btn
+                      <button
                         slot="activator"
                         v-on:click="getMovieData(movie.imdbID)"
                         light
                       >
-                        Click Me
-                      </v-btn>
+                        <v-chip>
+                                <v-icon>fas fa-eye</v-icon>
+                        </v-chip>
+                      </button>
 
                       <v-card>
                         <v-card-title
@@ -191,5 +192,12 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+  .text {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
   }
 </style>
