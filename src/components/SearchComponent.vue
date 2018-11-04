@@ -24,19 +24,19 @@
             <!--<v-card>-->
             <v-container fluid>
               <v-layout row wrap>
-                <v-flex
+                <v-flex pa-1
                   v-for="(movie, index) in data"
                   :key="index"
                   xs4
                 >
-                  <v-card flat tile>
+                  <v-card>
                     <img
                       v-if="movie.Poster!='N/A'" v-bind:src="movie.Poster"
                       height="150px"
                     />
+                    <h3 class="text" v-if="movie.Title">{{movie.Title}}</h3>
                     <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
                          height="150px"/>
-                    <v-flex xs4>
                         <button v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">
                           <div class="text-xs-center">
                             <v-chip>
@@ -55,19 +55,20 @@
                           </div>
                           </button>
 
-                    </v-flex>
                     <v-dialog
                       v-model="dialog"
                       width="750"
                       light
                     >
-                      <v-btn
+                      <button
                         slot="activator"
                         v-on:click="getMovieData(movie.imdbID)"
                         light
                       >
-                        Click Me
-                      </v-btn>
+                        <v-chip>
+                                <v-icon>fas fa-eye</v-icon>
+                        </v-chip>
+                      </button>
 
                       <v-card>
                         <v-card-title
@@ -84,7 +85,6 @@
 
                         <v-card-text>
                           <h1>{{currentMovieData.Title}}</h1>
-                          <p>{{currentMovieData.Plot}}</p>
                           <p>{{currentMovieData.Plot == "N/A"? '' : currentMovieData.Plot}}</p>
                         </v-card-text>
 
@@ -134,7 +134,7 @@ export default {
       favoriteMoviesList: this.$store.state.myFavoriteMovies,
       dialog: false,
       currentMovieData: {},
-      currentMovieRating: 7
+      currentMovieRating: 0
     };
   },
   methods: {
@@ -159,6 +159,9 @@ export default {
         .get("https://www.omdbapi.com/?i=" + movieId + "&apikey=93d8cda4")
         .then(response => {
           this.currentMovieData = response.data;
+          this.currentMovieRating = response.data.Ratings[0]
+            ? parseInt(response.data.Ratings[0].Value.substring(0, 3))
+            : 0;
         });
     },
     checkDupicate: function(imdbID) {
@@ -207,12 +210,19 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
+  .text {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+  }
 </style>
