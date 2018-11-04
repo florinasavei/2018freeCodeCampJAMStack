@@ -89,7 +89,7 @@
                         </v-card-text>
 
                         <div class="text-xs-center">
-                          <v-rating v-model="currentMovieRating" length="10"></v-rating>
+                          <v-rating v-model="currentMovieRating" length="10" readonly></v-rating>
                         </div>
 
                         <v-divider></v-divider>
@@ -154,7 +154,6 @@ export default {
       );
     },
     getMovieData: function(movieId) {
-      console.log("movie", movieId);
       axios
         .get("https://www.omdbapi.com/?i=" + movieId + "&apikey=93d8cda4")
         .then(response => {
@@ -183,7 +182,7 @@ export default {
         movie.Title
       }", imdbID : "${movie.imdbID}", Poster: "${movie.Poster}" , Year:${
         movie.Year
-      }, fbUser:"gigi" } ]  ) { returning {id   Title   }  }}`;
+      }, fbUser:"${this.$store.state.loggedUser.id}" } ]  ) { returning {id   Title   }  }}`;
 
       var data = JSON.stringify({
         query: query,

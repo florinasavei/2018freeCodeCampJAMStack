@@ -17,9 +17,7 @@
           <v-list>
             <v-list-tile v-for='movie in favoriteMoviesList' :key="movie.id" avatar @click="">
               <v-list-tile-avatar>
-                <v-chip>
                   <v-icon>fas fa-video</v-icon>
-                </v-chip>
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title>{{ movie.Title }}</v-list-tile-title>
@@ -59,7 +57,7 @@ export default {
       var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
       var data = JSON.stringify({
         query:
-          `query {  favorite_movies(where: {fbUser: {_eq: "${this.$store.state.loggedUser}"}}) {    id   Title Poster  Year  imdbID  fbUser    }}`,
+          `query {  favorite_movies(where: {fbUser: {_eq: "${this.$store.state.loggedUser.id}"}}) {    id   Title Poster  Year  imdbID  fbUser    }}`,
         variables: null
       });
       axios
