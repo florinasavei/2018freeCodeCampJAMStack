@@ -40,21 +40,21 @@
                         <button v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">
                           <div class="text-xs-center">
                             <v-chip>
-                              <v-icon left>fas fa-plus-circle</v-icon>  
+                              <v-icon left>fas fa-plus-circle</v-icon>
                               Add to favorites
                             </v-chip>
                           </div>
                           </button>
-                          
+
                           <button v-if="!checkDupicate(movie.imdbID)" disabled id="btn" class="" >
                           <div class="text-xs-center">
                             <v-chip>
-                              <v-icon left>fas fa-check-circle</v-icon>  
+                              <v-icon left>fas fa-check-circle</v-icon>
                               Allready Added
                             </v-chip>
                           </div>
                           </button>
-                          
+
                     </v-flex>
                     <v-dialog
                       v-model="dialog"
@@ -75,15 +75,22 @@
                           primary-title
                         >
                           <img
-                            v-if="movie.Poster" v-bind:src="movie.Poster"
+                            v-if="currentMovieData.Poster!='N/A'" v-bind:src="currentMovieData.Poster"
                             height="300px"
                           />
+                          <img v-else-if="currentMovieData.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
+                               height="300px"/>
                         </v-card-title>
 
                         <v-card-text>
                           <h1>{{currentMovieData.Title}}</h1>
                           <p>{{currentMovieData.Plot}}</p>
+                          <p>{{currentMovieData.Plot == "N/A"? '' : currentMovieData.Plot}}</p>
                         </v-card-text>
+
+                        <div class="text-xs-center">
+                          <v-rating v-model="currentMovieRating" length="10"></v-rating>
+                        </div>
 
                         <v-divider></v-divider>
 
@@ -126,13 +133,14 @@
         clickCount: 0,
         favoriteMoviesList : this.$store.state.myFavoriteMovies,
         dialog: false,
-        currentMovieData: {}
+        currentMovieData: {},
+        currentMovieRating: 7
       }
     },
     methods: {
       getData: function () {
         EventBus.$emit('showSpinner', this.clickCount);
-        setTimeout(() => 
+        setTimeout(() =>
         axios.get('https://www.omdbapi.com/?s=' + this.movie + '&apikey=93d8cda4')
           .then((response) => {
             this.data = response.data.Search;
@@ -151,11 +159,11 @@
         let isDuplicate = false;
         this.favoriteMoviesList.forEach((movie) => {
           if(movie.imdbID == imdbID){
-           
+
             isDuplicate = true;
           }
         })
-        
+
         return !isDuplicate;
       },
       addToFavorites: function (movie) {
