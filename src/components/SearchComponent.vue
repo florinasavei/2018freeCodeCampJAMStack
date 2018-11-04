@@ -51,7 +51,7 @@
   import { EventBus } from '../event-bus.js';
 
   export default {
-    name: 'HelloWorld',
+    name: 'SearchComponent',
     data() {
       return {
         data: [],
