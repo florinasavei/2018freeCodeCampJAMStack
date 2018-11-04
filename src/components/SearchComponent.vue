@@ -50,7 +50,7 @@
                           <div class="text-xs-center">
                             <v-chip>
                               <v-icon left>fas fa-check-circle</v-icon>
-                              Allready Added
+                              Already Added
                             </v-chip>
                           </div>
                           </button>
