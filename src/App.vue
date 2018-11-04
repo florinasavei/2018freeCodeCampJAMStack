@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { EventBus } from "./event-bus.js";
 import HomeView from "./views/Home";
 import facebookLogin from 'facebook-login-vuejs';
 export default {
