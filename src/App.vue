@@ -71,6 +71,7 @@ export default {
         id: null,
         name: 'John Doe'
       };
+      this.$store.state.myFavoriteMovies = [];
       EventBus.$emit("addedToFavorites", this.clickCount);
     }
   }
