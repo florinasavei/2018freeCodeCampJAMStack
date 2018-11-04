@@ -62,7 +62,7 @@ export default {
       });
       axios
         .post(
-          "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
+          location.protocol+"//fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
           data,
           config
         )
