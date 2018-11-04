@@ -46,14 +46,15 @@
                           </div>
                           </button>
                           
-                          <button v-if="!checkDupicate(movie.imdbID)" disabled id="btn" class="" v-on:click="addToFavorites(movie)">
+                          <button v-if="!checkDupicate(movie.imdbID)" disabled id="btn" class="" >
                           <div class="text-xs-center">
                             <v-chip>
-                              <v-icon left>fas fa-plus-circle</v-icon>  
+                              <v-icon left>fas fa-check-circle</v-icon>  
                               Allready Added
                             </v-chip>
                           </div>
                           </button>
+                          
                     </v-flex>
                     <v-dialog
                       v-model="dialog"
