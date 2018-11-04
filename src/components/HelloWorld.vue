@@ -15,17 +15,32 @@
               <v-btn id="btn" class="" v-on:click="getData">Find movie</v-btn>
             </v-flex>
           </v-layout>
-        </v-form>
-        <div class="wrapper">
-          <div v-if="data" id="example-1">
-            <div v-for="movie in data">
-              <img v-if="movie.Poster" v-bind:src="movie.Poster"/>
-              <v-flex xs12 sm2 md2>
-                <v-btn id="btn" class="" v-on:click="addToFavorites(movie)">Add ti favorites</v-btn>
-              </v-flex>
-            </div>
-          </div>
-        </div>
+        </v-form> 
+        <v-layout>
+          <v-flex xs12>
+            <!--<v-card>-->
+              <v-container fluid>
+                <v-layout row wrap>
+                  <v-flex
+                    v-for="(movie, index) in data"
+                    :key="index"
+                    xs4
+                  >
+                    <v-card flat tile>
+                      <img
+                        v-if="movie.Poster" v-bind:src="movie.Poster"
+                        height="150px"
+                      />
+                      <v-flex xs4>
+                        <v-btn id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
+                      </v-flex>
+                    </v-card>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            <!--</v-card>-->
+          </v-flex>
+          </v-layout>
       </v-container>
     </main>
   </div>
@@ -50,13 +65,13 @@
           .then((response) => {
             this.data = response.data.Search;
           });
-       
+
       },
       addToFavorites: function (movie) {
         console.log('movie', movie);
 
         this.$store.state.myFavoriteMovies.push(movie);
-        
+
         console.log('movies lost', this.$store.state.myFavoriteMovies);
         EventBus.$emit('i-got-clicked', this.clickCount);
       },
