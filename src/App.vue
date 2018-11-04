@@ -71,6 +71,7 @@ export default {
         id: null,
         name: 'John Doe'
       };
+      EventBus.$emit("addedToFavorites", this.clickCount);
     }
   }
 };
