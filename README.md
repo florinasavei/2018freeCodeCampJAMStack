@@ -1,4 +1,18 @@
-# vue-app
+# freeCodeCamp Brasov Movie APP
+
+
+
+This app is deployed on netflly:
+
+![](https://www.netlify.com/img/press/logos/logomark.png)
+
+
+
+# https://fccbv-team01.netlify.com
+
+
+
+
 
 ## Project setup
 ```
