@@ -15,33 +15,77 @@
               <v-btn id="btn" class="" v-on:click="getData">Find movie</v-btn>
             </v-flex>
           </v-layout>
-        </v-form> 
+        </v-form>
         <v-layout>
           <v-flex xs12>
             <!--<v-card>-->
-              <v-container fluid>
-                <v-layout row wrap>
-                  <v-flex
-                    v-for="(movie, index) in data"
-                    :key="index"
-                    xs4
-                  >
-                    <v-card flat tile>
-                      <img
-                        v-if="movie.Poster!='N/A'" v-bind:src="movie.Poster"
-                        height="150px"
-                      />
-                      <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg" height="150px"/>
-                      <v-flex xs4>
+            <v-container fluid>
+              <v-layout row wrap>
+                <v-flex
+                  v-for="(movie, index) in data"
+                  :key="index"
+                  xs4
+                >
+                  <v-card flat tile>
+                    <img
+                      v-if="movie.Poster!='N/A'" v-bind:src="movie.Poster"
+                      height="150px"
+                    />
+                    <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
+                         height="150px"/>
+                    <v-flex xs4>
                         <v-btn v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
-                      </v-flex>
-                    </v-card>
-                  </v-flex>
-                </v-layout>
-              </v-container>
+                    </v-flex>
+                    <v-dialog
+                      v-model="dialog"
+                      width="700"
+                      attach="#searchContainer"
+                      light
+                    >
+                      <v-btn
+                        slot="activator"
+                        light
+                      >
+                        Click Me
+                      </v-btn>
+
+                      <v-card>
+                        <v-card-title
+                          class=""
+                          primary-title
+                        >
+                          <img
+                            v-if="movie.Poster" v-bind:src="movie.Poster"
+                            height="300px"
+                          />
+                        </v-card-title>
+
+                        <v-card-text>
+                          <h1>{{movie.Title}}</h1>
+                          <p></p>
+                        </v-card-text>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            color="primary"
+                            flat
+                            @click="dialog = false"
+                          >
+                            Close
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
             <!--</v-card>-->
           </v-flex>
-          </v-layout>
+        </v-layout>
       </v-container>
     </main>
   </div>
@@ -49,7 +93,7 @@
 
 <script>
   import axios from 'axios';
-  import { EventBus } from '../event-bus.js';
+  import {EventBus} from '../event-bus.js';
 
   export default {
     name: 'SearchComponent',
