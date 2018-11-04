@@ -67,6 +67,10 @@ export default {
       this.name='';
       this.email='';
       this.personalID='';
+      this.loggedUser= {
+        id: null,
+        name: 'John Doe'
+      };
     }
   }
 };
