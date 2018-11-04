@@ -36,38 +36,31 @@ export default {
   },
   methods: {
     refreshFavoriteMovies: function() {
-      console.log(this.favoriteMoviesList);
+      this.getFavoriteMoviesFromServer();
       this.favoriteMoviesList = this.$store.state.myFavoriteMovies;
     },
     getFavoriteMoviesFromServer: function() {
-      // var config = {  headers: {'X-Hasura-Access-Key': 'freecodecamp'}};
-      // var data = JSON.stringify({query:"query {\n  favorite_movies {\n    id\n    name\n  }\n}",variables:null})
-      // axios.post('http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql',
-      // data,
-      // config)
-      //     .then((response)= > {
-      //       debugger;
-      //        this.$store.state.myFavoriteMovies = response.data;
-      //     });
+      var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
+      var data = JSON.stringify({
+        query:
+          "query {  favorite_movies {    id   Title Poster  Year  imdbID  fbUser    }}",
+        variables: null
+      });
+      axios
+        .post(
+          "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
+          data,
+          config
+        )
+        .then(response => {
+          this.updateStore(response.data.data.favorite_movies);
+        });
     },
-    addFavoriteMovieToServer: function() {
-      // var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
-      // var data = JSON.stringify({
-      //   query:
-      //     'mutation insert_favorite_movies {\n  insert_favorite_movies(\n    objects: [\n      {\n        id: 72,\n        name: "Article 1"\n      }\n    ]\n  ) {\n    returning {\n      id\n      name\n    }\n  }\n}',
-      //   operationName: "insert_favorite_movies",
-      //   variables: null
-      // });
-      // axios
-      //   .post(
-      //     "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
-      //     data,
-      //     config
-      //   )
-      //   .then(response => {
-      //     debugger;
-      //     this.$store.state.myFavoriteMovies = response.data;
-      //   });
+    updateStore: function(data) {
+      if (data.length > 0) {
+        this.favoriteMoviesList = data;
+        this.$store.state.myFavoriteMovies = data;
+      }
     }
   },
   created: function() {

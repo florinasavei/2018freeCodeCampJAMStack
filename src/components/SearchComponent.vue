@@ -119,77 +119,100 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import { EventBus } from '../event-bus.js';
-  import SpinnerComponent from "../components/Spinner.vue";
+import axios from "axios";
+import { EventBus } from "../event-bus.js";
+import SpinnerComponent from "../components/Spinner.vue";
 
-  export default {
-    name: 'SearchComponent',
-    components:{SpinnerComponent},
-    data() {
-      return {
-        data: [],
-        movie: '',
-        clickCount: 0,
-        favoriteMoviesList : this.$store.state.myFavoriteMovies,
-        dialog: false,
-        currentMovieData: {},
-        currentMovieRating: 7
-      }
+export default {
+  name: "SearchComponent",
+  components: { SpinnerComponent },
+  data() {
+    return {
+      data: [],
+      movie: "",
+      clickCount: 0,
+      favoriteMoviesList: this.$store.state.myFavoriteMovies,
+      dialog: false,
+      currentMovieData: {},
+      currentMovieRating: 7
+    };
+  },
+  methods: {
+    getData: function() {
+      EventBus.$emit("showSpinner", this.clickCount);
+      setTimeout(
+        () =>
+          axios
+            .get(
+              "https://www.omdbapi.com/?s=" + this.movie + "&apikey=93d8cda4"
+            )
+            .then(response => {
+              this.data = response.data.Search;
+              EventBus.$emit("hideSpinner", this.clickCount);
+            }),
+        500
+      );
     },
-    methods: {
-      getData: function () {
-        EventBus.$emit('showSpinner', this.clickCount);
-        setTimeout(() =>
-        axios.get('https://www.omdbapi.com/?s=' + this.movie + '&apikey=93d8cda4')
-          .then((response) => {
-            this.data = response.data.Search;
-            EventBus.$emit('hideSpinner', this.clickCount);
-          })
-        , 500);
-      },
-      getMovieData: function (movieId) {
-        console.log('movie', movieId);
-        axios.get('https://www.omdbapi.com/?i=' + movieId + '&apikey=93d8cda4')
-          .then((response) => {
-            this.currentMovieData = response.data;
-          });
-      },
-      checkDupicate: function(imdbID){
-        let isDuplicate = false;
-        this.favoriteMoviesList.forEach((movie) => {
-          if(movie.imdbID == imdbID){
+    getMovieData: function(movieId) {
+      console.log("movie", movieId);
+      axios
+        .get("https://www.omdbapi.com/?i=" + movieId + "&apikey=93d8cda4")
+        .then(response => {
+          this.currentMovieData = response.data;
+        });
+    },
+    checkDupicate: function(imdbID) {
+      let isDuplicate = false;
+      this.favoriteMoviesList.forEach(movie => {
+        if (movie.imdbID == imdbID) {
+          isDuplicate = true;
+        }
+      });
 
-            isDuplicate = true;
-          }
-        })
+      return !isDuplicate;
+    },
+    addToFavorites: function(movie) {
+      this.$store.state.myFavoriteMovies.push(movie);
+      this.favoriteMoviesList = this.$store.state.myFavoriteMovies;
 
-        return !isDuplicate;
-      },
-      addToFavorites: function (movie) {
-        console.log('movie', movie);
+      var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
+      var query = `mutation insert_favorite_movies {insert_favorite_movies(objects: [ { Title : "${
+        movie.Title
+      }", imdbID : "${movie.imdbID}", Poster: "${movie.Poster}" , Year:${
+        movie.Year
+      }, fbUser:"gigi" } ]  ) { returning {id   Title   }  }}`;
 
-        this.$store.state.myFavoriteMovies.push(movie);
-        this.favoriteMoviesList  = this.$store.state.myFavoriteMovies;
-        console.log('movies list', this.favoriteMoviesList);
-        EventBus.$emit('addedToFavorites', this.clickCount);
-      },
-      submitForm: function (event) {
-        this.getData();
-        event.preventDefault();
-      }
+      var data = JSON.stringify({
+        query: query,
+        operationName: "insert_favorite_movies",
+        variables: null
+      });
+
+      axios
+        .post(
+          "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
+          data,
+          config
+        )
+        .then(response => {
+          EventBus.$emit("addedToFavorites", this.clickCount);
+        });
+    },
+    submitForm: function(event) {
+      this.getData();
+      event.preventDefault();
     }
   }
-
+};
 </script>
 
 <style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 </style>
