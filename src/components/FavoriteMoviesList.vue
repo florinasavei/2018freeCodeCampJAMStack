@@ -56,7 +56,6 @@ export default {
   methods: {
     refreshFavoriteMovies: function() {
       this.getFavoriteMoviesFromServer();
-      debugger;
       this.favoriteMoviesList = this.$store.state.myFavoriteMovies;
     },
     getFavoriteMoviesFromServer: function() {
