@@ -24,7 +24,7 @@
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-btn icon>
-                  <v-icon color="grey lighten-1">delete</v-icon>
+                  <v-icon  v-on:click="removeFavorite(movie.imdbID)" color="grey lighten-1">delete</v-icon>
                 </v-btn>
               </v-list-tile-action>
             </v-list-tile>
@@ -70,6 +70,30 @@ export default {
           this.updateStore(response.data.data.favorite_movies);
         });
     },
+
+    removeFavorite: function(movieId) {
+      
+      var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
+      var query = `mutation delete_favorite_movie_by_imdbID { delete_favorite_movies(    where: {imdbID: {_eq: "${movieId}"}, fbUser : {_eq:"${this.$store.state.loggedUser.id}"}}  ) {    affected_rows  }}`;
+
+      var data = JSON.stringify({
+        query: query,
+        operationName: "delete_favorite_movie_by_imdbID",
+        variables: null
+      });
+
+      axios
+        .post(
+          location.protocol+"//fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
+          data,
+          config
+        )
+        .then(response => {
+          this.refreshFavoriteMovies();
+        });
+        
+    },
+
     updateStore: function(data) {
       if (data.length > 0) {
         this.favoriteMoviesList = data;
