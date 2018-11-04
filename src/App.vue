@@ -62,6 +62,9 @@ export default {
     },
     onLogout() {
       this.isConnected = false;
+      this.name='';
+      this.email='';
+      this.personalID='';
     }
   }
 };
