@@ -1,5 +1,5 @@
 <template>
-  <div class="spinner" v-if="isVisible">
+  <div class="spinnerLoading" v-if="isVisible">
     <div class="rect1"></div>
     <div class="rect2"></div>
     <div class="rect3"></div>
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style>
-.spinner {
+.spinnerLoading {
   position: absolute;
   margin-top: 120px;
   margin-left: 25%; 
@@ -45,7 +45,7 @@ export default {
   z-index: 2;
 }
 
-.spinner > div {
+.spinnerLoading > div {
   background-color: teal;
   height: 100%;
   width: 17px;
@@ -55,22 +55,22 @@ export default {
   animation: stretchdelay 1.2s infinite ease-in-out;
 }
 
-.spinner .rect2 {
+.spinnerLoading .rect2 {
   -webkit-animation-delay: -1.1s;
   animation-delay: -1.1s;
 }
 
-.spinner .rect3 {
+.spinnerLoading .rect3 {
   -webkit-animation-delay: -1s;
   animation-delay: -1s;
 }
 
-.spinner .rect4 {
+.spinnerLoading .rect4 {
   -webkit-animation-delay: -0.9s;
   animation-delay: -0.9s;
 }
 
-.spinner .rect5 {
+.spinnerLoading .rect5 {
   -webkit-animation-delay: -0.8s;
   animation-delay: -0.8s;
 }
