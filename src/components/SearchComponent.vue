@@ -16,33 +16,77 @@
               <v-btn id="btn" class="" v-on:click="getData">Find movie</v-btn>
             </v-flex>
           </v-layout>
-        </v-form> 
+        </v-form>
         <v-layout>
           <v-flex xs12>
             <!--<v-card>-->
-              <v-container fluid>
-                <v-layout row wrap>
-                  <v-flex
-                    v-for="(movie, index) in data"
-                    :key="index"
-                    xs4
-                  >
-                    <v-card flat tile>
-                      <img
-                        v-if="movie.Poster!='N/A'" v-bind:src="movie.Poster"
-                        height="150px"
-                      />
-                      <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg" height="150px"/>
-                      <v-flex xs4>
-                        <v-btn id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
-                      </v-flex>
-                    </v-card>
-                  </v-flex>
-                </v-layout>
-              </v-container>
+            <v-container fluid>
+              <v-layout row wrap>
+                <v-flex
+                  v-for="(movie, index) in data"
+                  :key="index"
+                  xs4
+                >
+                  <v-card flat tile>
+                    <img
+                      v-if="movie.Poster!='N/A'" v-bind:src="movie.Poster"
+                      height="150px"
+                    />
+                    <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
+                         height="150px"/>
+                    <v-flex xs4>
+                        <v-btn v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
+                    </v-flex>
+                    <v-dialog
+                      v-model="dialog"
+                      width="750"
+                      light
+                    >
+                      <v-btn
+                        slot="activator"
+                        v-on:click="getMovieData(movie.imdbID)"
+                        light
+                      >
+                        Click Me
+                      </v-btn>
+
+                      <v-card>
+                        <v-card-title
+                          class=""
+                          primary-title
+                        >
+                          <img
+                            v-if="movie.Poster" v-bind:src="movie.Poster"
+                            height="300px"
+                          />
+                        </v-card-title>
+
+                        <v-card-text>
+                          <h1>{{currentMovieData.Title}}</h1>
+                          <p>{{currentMovieData.Plot}}</p>
+                        </v-card-text>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            color="primary"
+                            flat
+                            @click="dialog = false"
+                          >
+                            Close
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
             <!--</v-card>-->
           </v-flex>
-          </v-layout>
+        </v-layout>
       </v-container>
     </main>
   </div>
@@ -60,7 +104,10 @@
       return {
         data: [],
         movie: '',
-        clickCount: 0
+        clickCount: 0,
+        favoriteMoviesList : this.$store.state.myFavoriteMovies,
+        dialog: false,
+        currentMovieData: {}
       }
     },
     methods: {
@@ -74,12 +121,30 @@
           })
         , 500);
       },
+      getMovieData: function (movieId) {
+        console.log('movie', movieId);
+        axios.get('https://www.omdbapi.com/?i=' + movieId + '&apikey=93d8cda4')
+          .then((response) => {
+            this.currentMovieData = response.data;
+          });
+      },
+      checkDupicate: function(imdbID){
+        debugger;
+        this.favoriteMoviesList.forEach((movie) => {
+          if(movie.imdbID == imdbID){
+            debugger;
+            return false;
+          }
+        })
+        debugger;
+        return true;
+      },
       addToFavorites: function (movie) {
         console.log('movie', movie);
 
         this.$store.state.myFavoriteMovies.push(movie);
-
-        console.log('movies lost', this.$store.state.myFavoriteMovies);
+        this.favoriteMoviesList  = this.$store.state.myFavoriteMovies;
+        console.log('movies list', this.favoriteMoviesList);
         EventBus.$emit('addedToFavorites', this.clickCount);
       },
       submitForm: function (event) {
