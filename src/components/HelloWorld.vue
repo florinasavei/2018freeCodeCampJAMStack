@@ -28,9 +28,10 @@
                   >
                     <v-card flat tile>
                       <img
-                        v-if="movie.Poster" v-bind:src="movie.Poster"
+                        v-if="movie.Poster!='N/A'" v-bind:src="movie.Poster"
                         height="150px"
                       />
+                      <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg" height="150px"/>
                       <v-flex xs4>
                         <v-btn id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
                       </v-flex>
