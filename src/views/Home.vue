@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <SpinnerComponent/>
     <v-flex xs8>
-      <HelloWorld/>
+      <SearchComponent/>
     </v-flex>
     <v-flex xs4>
       <FavoriteMoviesList/>
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld.vue";
+import SearchComponent from "../components/SearchComponent.vue";
 import FavoriteMoviesList from "../components/FavoriteMoviesList.vue";
 import SpinnerComponent from "../components/Spinner.vue";
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld,
+    SearchComponent,
     FavoriteMoviesList,
     SpinnerComponent
   }

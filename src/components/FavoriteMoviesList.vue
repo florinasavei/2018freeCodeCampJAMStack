@@ -47,33 +47,35 @@ export default {
     }
   },
   created: function() {
+    
     // var config = {  headers: {'X-Hasura-Access-Key': 'freecodecamp'}};
     // var data = JSON.stringify({query:"query {\n  favorite_movies {\n    id\n    name\n  }\n}",variables:null})
     // axios.post('http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql',
     // data,
     // config)
-    //     .then((response) => {
+    //     .then((response)= > {
     //       debugger;
     //        this.$store.state.myFavoriteMovies = response.data;
     //     });
 
-    var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
-    var data = JSON.stringify({
-      query:
-        'mutation insert_favorite_movies {\n  insert_favorite_movies(\n    objects: [\n      {\n        id: 72,\n        name: "Article 1"\n      }\n    ]\n  ) {\n    returning {\n      id\n      name\n    }\n  }\n}',
-      operationName: "insert_favorite_movies",
-      variables: null
-    });
-    axios
-      .post(
-        "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
-        data,
-        config
-      )
-      .then(response => {
-        debugger;
-        this.$store.state.myFavoriteMovies = response.data;
-      });
+    // var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
+    // var data = JSON.stringify({
+    //   query:
+    //     'mutation insert_favorite_movies {\n  insert_favorite_movies(\n    objects: [\n      {\n        id: 72,\n        name: "Article 1"\n      }\n    ]\n  ) {\n    returning {\n      id\n      name\n    }\n  }\n}',
+    //   operationName: "insert_favorite_movies",
+    //   variables: null
+    // });
+    // axios
+    //   .post(
+    //     "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
+    //     data,
+    //     config
+    //   )
+    //   .then(response => {
+    //     debugger;
+    //     this.$store.state.myFavoriteMovies = response.data;
+    //   });
+
   }
 };
 </script>
