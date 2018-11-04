@@ -33,7 +33,7 @@
                       />
                       <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg" height="150px"/>
                       <v-flex xs4>
-                        <v-btn id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
+                        <v-btn v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
                       </v-flex>
                     </v-card>
                   </v-flex>
@@ -57,7 +57,8 @@
       return {
         data: [],
         movie: '',
-        clickCount: 0
+        clickCount: 0,
+        favoriteMoviesList : this.$store.state.myFavoriteMovies
       }
     },
     methods: {
@@ -69,12 +70,23 @@
             EventBus.$emit('hideSpinner', this.clickCount);
           });
       },
+      checkDupicate: function(imdbID){
+        debugger;
+        this.favoriteMoviesList.forEach((movie) => {
+          if(movie.imdbID == imdbID){
+            debugger;
+            return false;
+          }          
+        })
+        debugger;
+        return true;
+      },
       addToFavorites: function (movie) {
         console.log('movie', movie);
 
         this.$store.state.myFavoriteMovies.push(movie);
-
-        console.log('movies lost', this.$store.state.myFavoriteMovies);
+        this.favoriteMoviesList  = this.$store.state.myFavoriteMovies;
+        console.log('movies list', this.favoriteMoviesList);
         EventBus.$emit('addedToFavorites', this.clickCount);
       },
       submitForm: function (event) {
