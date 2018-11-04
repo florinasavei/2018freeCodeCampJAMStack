@@ -20,7 +20,7 @@
                   <v-icon>fas fa-video</v-icon>
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title> <span v-bind:class="[movie.seen ? 'movie-seen' : 'movie-not-seen']"> {{ movie.Title }} ( {{movie.Year}} ) </span> </v-list-tile-title>
+                <v-list-tile-title> <span v-bind:class="[movie.seen ? 'movie-seen' : 'movie-not-seen']"> {{ movie.Title }} ({{movie.Year}}) </span> </v-list-tile-title>
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-layout row>
