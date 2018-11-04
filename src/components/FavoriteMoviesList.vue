@@ -1,23 +1,40 @@
 <template>
   <div id="favoriteMoviesListContainer">
-      <main>
-        <v-container>
-          <div class="wrapper">
-            <v-flex xs12 sm2 md2>
-                <v-btn id="refreshFavoriteMoviesBtn" ref="refreshFavoriteMoviesBtn" class="" v-on:click="refreshFavoriteMovies">
-                   <v-icon>fas fa-sync-alt</v-icon>
+    <v-layout row>
+      <v-flex xs10>
+        <v-card v-if="favoriteMoviesList">
+          <v-toolbar light>
+            <v-btn id="refreshFavoriteMoviesBtn" ref="refreshFavoriteMoviesBtn" class=""
+                   v-on:click="refreshFavoriteMovies">
+              <v-icon>fas fa-sync-alt</v-icon>
+            </v-btn>
+            <v-toolbar-title>Watchlist</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn dark icon>
+              <v-icon dark>search</v-icon>
+            </v-btn>
+          </v-toolbar>
+          <v-list two-line subheader>
+            <v-subheader inset>Folders</v-subheader>
+            <v-list-tile v-for='movie in favoriteMoviesList' :key="movie.id" avatar @click="">
+              <v-list-tile-avatar>
+                <v-chip>
+                  <v-icon>fas fa-video</v-icon>
+                </v-chip>
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>{{ movie.Title }}</v-list-tile-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn icon>
+                  <v-icon color="grey lighten-1">delete</v-icon>
                 </v-btn>
-            </v-flex>
-
-          <div v-if="favoriteMoviesList" id="example-1">
-            <div v-for='movie in favoriteMoviesList'>
-             <p>{{movie.Title}}</p>
-            </div>
-          </div>
-
-        </div>
-      </v-container>
-    </main>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -78,6 +95,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  position: fixed;
+  position: sticky;
 }
 </style>
