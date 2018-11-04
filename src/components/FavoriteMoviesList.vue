@@ -95,10 +95,10 @@ export default {
     },
 
     updateStore: function(data) {
-      if (data.length > 0) {
+      //if (data.length) {
         this.favoriteMoviesList = data;
         this.$store.state.myFavoriteMovies = data;
-      }
+      //}
     }
   },
   created: function() {
