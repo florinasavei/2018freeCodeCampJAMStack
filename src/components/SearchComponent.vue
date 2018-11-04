@@ -38,12 +38,12 @@
                     </v-flex>
                     <v-dialog
                       v-model="dialog"
-                      width="700"
-                      attach="#searchContainer"
+                      width="750"
                       light
                     >
                       <v-btn
                         slot="activator"
+                        v-on:click="getMovieData(movie.imdbID)"
                         light
                       >
                         Click Me
@@ -61,8 +61,8 @@
                         </v-card-title>
 
                         <v-card-text>
-                          <h1>{{movie.Title}}</h1>
-                          <p></p>
+                          <h1>{{currentMovieData.Title}}</h1>
+                          <p>{{currentMovieData.Plot}}</p>
                         </v-card-text>
 
                         <v-divider></v-divider>
@@ -102,7 +102,9 @@
         data: [],
         movie: '',
         clickCount: 0,
-        favoriteMoviesList : this.$store.state.myFavoriteMovies
+        favoriteMoviesList : this.$store.state.myFavoriteMovies,
+        dialog: false,
+        currentMovieData: {}
       }
     },
     methods: {
@@ -114,13 +116,20 @@
             EventBus.$emit('hideSpinner', this.clickCount);
           });
       },
+      getMovieData: function (movieId) {
+        console.log('movie', movieId);
+        axios.get('https://www.omdbapi.com/?i=' + movieId + '&apikey=93d8cda4')
+          .then((response) => {
+            this.currentMovieData = response.data;
+          });
+      },
       checkDupicate: function(imdbID){
         debugger;
         this.favoriteMoviesList.forEach((movie) => {
           if(movie.imdbID == imdbID){
             debugger;
             return false;
-          }          
+          }
         })
         debugger;
         return true;
