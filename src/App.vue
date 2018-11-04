@@ -47,7 +47,8 @@ export default {
           this.personalID = userInformation.id;
           this.email = userInformation.email;
           this.name = userInformation.name;
-          console.log(userInformation);
+          this.$store.state.loggedUser = {id:userInformation.id, name:userInformation.name };
+          EventBus.$emit("addedToFavorites", this.clickCount);
         }
       )
     },

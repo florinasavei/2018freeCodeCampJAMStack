@@ -6,7 +6,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     myFavoriteMovies: [],
-    loggedUser: ''
+    loggedUser: {
+      id: null,
+      name: 'John Doe'
+    }
   },
   mutations: {
 

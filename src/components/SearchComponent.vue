@@ -183,7 +183,7 @@ export default {
         movie.Title
       }", imdbID : "${movie.imdbID}", Poster: "${movie.Poster}" , Year:${
         movie.Year
-      }, fbUser:"gigi" } ]  ) { returning {id   Title   }  }}`;
+      }, fbUser:"${this.$store.state.loggedUser.id}" } ]  ) { returning {id   Title   }  }}`;
 
       var data = JSON.stringify({
         query: query,

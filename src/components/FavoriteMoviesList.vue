@@ -59,7 +59,7 @@ export default {
       var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
       var data = JSON.stringify({
         query:
-          `query {  favorite_movies(where: {fbUser: {_eq: "${this.$store.state.loggedUser}"}}) {    id   Title Poster  Year  imdbID  fbUser    }}`,
+          `query {  favorite_movies(where: {fbUser: {_eq: "${this.$store.state.loggedUser.id}"}}) {    id   Title Poster  Year  imdbID  fbUser    }}`,
         variables: null
       });
       axios
