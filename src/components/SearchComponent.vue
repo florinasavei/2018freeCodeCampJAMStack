@@ -13,7 +13,9 @@
               ></v-text-field>
             </v-flex>
             <v-flex xs12 sm2 md2>
-              <v-btn id="btn" class="" v-on:click="getData">Find movie</v-btn>
+              <v-btn id="btn" class="" v-on:click="getData">
+                <v-icon>fas fa-search</v-icon>
+              </v-btn>
             </v-flex>
           </v-layout>
         </v-form>
@@ -35,7 +37,23 @@
                     <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
                          height="150px"/>
                     <v-flex xs4>
-                        <v-btn v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">Add to watchlitst</v-btn>
+                        <button v-if="checkDupicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">
+                          <div class="text-xs-center">
+                            <v-chip>
+                              <v-icon left>fas fa-plus-circle</v-icon>  
+                              Add to favorites
+                            </v-chip>
+                          </div>
+                          </button>
+                          
+                          <button v-if="!checkDupicate(movie.imdbID)" disabled id="btn" class="" v-on:click="addToFavorites(movie)">
+                          <div class="text-xs-center">
+                            <v-chip>
+                              <v-icon left>fas fa-plus-circle</v-icon>  
+                              Allready Added
+                            </v-chip>
+                          </div>
+                          </button>
                     </v-flex>
                     <v-dialog
                       v-model="dialog"
@@ -129,15 +147,15 @@
           });
       },
       checkDupicate: function(imdbID){
-        debugger;
+        let isDuplicate = false;
         this.favoriteMoviesList.forEach((movie) => {
           if(movie.imdbID == imdbID){
-            debugger;
-            return false;
+           
+            isDuplicate = true;
           }
         })
-        debugger;
-        return true;
+        
+        return !isDuplicate;
       },
       addToFavorites: function (movie) {
         console.log('movie', movie);

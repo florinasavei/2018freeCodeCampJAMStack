@@ -4,7 +4,9 @@
         <v-container>
           <div class="wrapper">
             <v-flex xs12 sm2 md2>
-                <v-btn id="refreshFavoriteMoviesBtn" ref="refreshFavoriteMoviesBtn" class="" v-on:click="refreshFavoriteMovies">refresh movies</v-btn>
+                <v-btn id="refreshFavoriteMoviesBtn" ref="refreshFavoriteMoviesBtn" class="" v-on:click="refreshFavoriteMovies">
+                   <v-icon>fas fa-sync-alt</v-icon>
+                </v-btn>
             </v-flex>
 
           <div v-if="favoriteMoviesList" id="example-1">
