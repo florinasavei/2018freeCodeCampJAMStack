@@ -62,7 +62,7 @@
     methods: {
       getData: function () {
         EventBus.$emit('showSpinner', this.clickCount);
-        axios.get('http://www.omdbapi.com/?s=' + this.movie + '&apikey=93d8cda4')
+        axios.get('https://www.omdbapi.com/?s=' + this.movie + '&apikey=93d8cda4')
           .then((response) => {
             this.data = response.data.Search;
             EventBus.$emit('hideSpinner', this.clickCount);
