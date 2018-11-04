@@ -24,7 +24,7 @@
             <!--<v-card>-->
             <v-container fluid>
               <v-layout row wrap>
-                <v-flex ma-1
+                <v-flex pa-1
                   v-for="(movie, index) in data"
                   :key="index"
                   xs4
