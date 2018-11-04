@@ -1,5 +1,6 @@
 <template>
   <v-layout row wrap>
+    <SpinnerComponent/>
     <v-flex xs8>
       <HelloWorld/>
     </v-flex>
@@ -12,12 +13,14 @@
 <script>
 import HelloWorld from "../components/HelloWorld.vue";
 import FavoriteMoviesList from "../components/FavoriteMoviesList.vue";
+import SpinnerComponent from "../components/Spinner.vue";
 
 export default {
   name: 'HomeView',
   components: {
     HelloWorld,
-    FavoriteMoviesList
+    FavoriteMoviesList,
+    SpinnerComponent
   }
 };
 </script>
