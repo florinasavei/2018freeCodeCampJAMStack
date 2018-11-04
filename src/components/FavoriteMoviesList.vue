@@ -20,12 +20,17 @@
                   <v-icon>fas fa-video</v-icon>
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-title>{{ movie.Title }}</v-list-tile-title>
+                <v-list-tile-title> <span v-bind:class="[movie.seen ? 'movie-seen' : 'movie-not-seen']"> {{ movie.Title }} </span> </v-list-tile-title>
               </v-list-tile-content>
               <v-list-tile-action>
-                <v-btn icon>
-                  <v-icon  v-on:click="removeFavorite(movie.imdbID)" color="grey lighten-1">delete</v-icon>
-                </v-btn>
+                <v-layout row>
+                  <v-btn icon>
+                    <v-icon  v-on:click="markAsSeen(movie.imdbID)" color="grey lighten-1">check</v-icon>
+                  </v-btn>
+                  <v-btn icon>
+                    <v-icon  v-on:click="removeFavorite(movie.imdbID)" color="grey lighten-1">delete</v-icon>
+                  </v-btn>                  
+                </v-layout>
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
@@ -51,13 +56,14 @@ export default {
   methods: {
     refreshFavoriteMovies: function() {
       this.getFavoriteMoviesFromServer();
+      debugger;
       this.favoriteMoviesList = this.$store.state.myFavoriteMovies;
     },
     getFavoriteMoviesFromServer: function() {
       var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
       var data = JSON.stringify({
         query:
-          `query {  favorite_movies(where: {fbUser: {_eq: "${this.$store.state.loggedUser.id}"}}) {    id   Title Poster  Year  imdbID  fbUser    }}`,
+          `query {  favorite_movies(where: {fbUser: {_eq: "${this.$store.state.loggedUser.id}"}}) {    id   Title Poster  Year  imdbID  fbUser  seen  }}`,
         variables: null
       });
       axios
@@ -79,6 +85,29 @@ export default {
       var data = JSON.stringify({
         query: query,
         operationName: "delete_favorite_movie_by_imdbID",
+        variables: null
+      });
+
+      axios
+        .post(
+          location.protocol+"//fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
+          data,
+          config
+        )
+        .then(response => {
+          this.refreshFavoriteMovies();
+        });
+        
+    },
+
+    markAsSeen: function(movieId) {
+      
+      var config = { headers: { "X-Hasura-Access-Key": "freecodecamp" } };
+      var query = `mutation update_favorite_movies {  update_favorite_movies(    where: {imdbID: {_eq: "${movieId}"}, fbUser: {_eq: "${this.$store.state.loggedUser.id}"}},    _set: {seen: true}  ) {    affected_rows  }}`;
+
+      var data = JSON.stringify({
+        query: query,
+        operationName: "update_favorite_movies",
         variables: null
       });
 
@@ -117,5 +146,8 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   position: sticky;
+}
+.movie-seen{
+  text-decoration: line-through;
 }
 </style>
