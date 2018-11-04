@@ -12,9 +12,7 @@ This app is deployed on netflly:
 
 
 
-App presentation: 
-
-[APP Presentation]: https://docs.google.com/presentation/d/1lj-r2wdHdVW57YyTY8cgMJqBUVbC72YegC97qaVsAyg/edit?usp=sharing	"APP Presentation"
+ [App Presentation](https://docs.google.com/presentation/d/1lj-r2wdHdVW57YyTY8cgMJqBUVbC72YegC97qaVsAyg/edit?usp=sharing)
 
 
 
