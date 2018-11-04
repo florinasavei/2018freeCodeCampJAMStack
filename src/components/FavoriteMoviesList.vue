@@ -14,8 +14,7 @@
               <v-icon dark>search</v-icon>
             </v-btn>
           </v-toolbar>
-          <v-list two-line subheader>
-            <v-subheader inset>Folders</v-subheader>
+          <v-list>
             <v-list-tile v-for='movie in favoriteMoviesList' :key="movie.id" avatar @click="">
               <v-list-tile-avatar>
                 <v-chip>
@@ -62,7 +61,7 @@ export default {
         query:
           `query {  favorite_movies(where: {fbUser: {_eq: "${this.$store.state.loggedUser}"}}) {    id   Title Poster  Year  imdbID  fbUser    }}`,
         variables: null
-      });      
+      });
       axios
         .post(
           "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
