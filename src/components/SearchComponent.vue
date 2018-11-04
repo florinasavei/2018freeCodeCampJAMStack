@@ -130,6 +130,7 @@ export default {
     return {
       data: [],
       movie: "",
+      protocol:location.protocol,
       clickCount: 0,
       favoriteMoviesList: this.$store.state.myFavoriteMovies,
       dialog: false,
@@ -144,7 +145,7 @@ export default {
         () =>
           axios
             .get(
-              "https://www.omdbapi.com/?s=" + this.movie + "&apikey=93d8cda4"
+              this.protocol+"//www.omdbapi.com/?s=" + this.movie + "&apikey=93d8cda4"
             )
             .then(response => {
               this.data = response.data.Search;
@@ -155,7 +156,7 @@ export default {
     },
     getMovieData: function(movieId) {
       axios
-        .get("https://www.omdbapi.com/?i=" + movieId + "&apikey=93d8cda4")
+        .get(this.protocol+"//www.omdbapi.com/?i=" + movieId + "&apikey=93d8cda4")
         .then(response => {
           this.currentMovieData = response.data;
           this.currentMovieRating = response.data.Ratings[0]
@@ -192,7 +193,7 @@ export default {
 
       axios
         .post(
-          "http://fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
+          this.protocol+"//fccbv-movie-list.herokuapp.com/v1alpha1/graphql",
           data,
           config
         )
