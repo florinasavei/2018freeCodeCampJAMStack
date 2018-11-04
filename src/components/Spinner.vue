@@ -8,6 +8,8 @@
   </div>
 </template>
 <script>
+import { EventBus } from "../event-bus.js";
+
 export default {
   name: "SpinnerComponent",
   data() {
@@ -22,6 +24,10 @@ export default {
     hideSpinner: function() {
       this.isVisible = false;
     }
+  },
+  created: function() {
+    EventBus.$on("showSpinner", this.showSpinner);
+    EventBus.$on("hideSpinner", this.hideSpinner);
   }
 };
 </script>

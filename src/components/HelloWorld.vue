@@ -46,11 +46,12 @@
     },
     methods: {
       getData: function () {
+        EventBus.$emit('showSpinner', this.clickCount);
         axios.get('http://www.omdbapi.com/?s=' + this.movie + '&apikey=93d8cda4')
           .then((response) => {
             this.data = response.data.Search;
+            EventBus.$emit('hideSpinner', this.clickCount);
           });
-       
       },
       addToFavorites: function (movie) {
         console.log('movie', movie);
@@ -58,7 +59,7 @@
         this.$store.state.myFavoriteMovies.push(movie);
         
         console.log('movies lost', this.$store.state.myFavoriteMovies);
-        EventBus.$emit('i-got-clicked', this.clickCount);
+        EventBus.$emit('addedToFavorites', this.clickCount);
       },
       submitForm: function (event) {
         this.getData();

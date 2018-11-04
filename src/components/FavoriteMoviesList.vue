@@ -30,7 +30,7 @@ var callback = function() {
 };
 
 import { EventBus } from "../event-bus.js";
-EventBus.$on("i-got-clicked", callback);
+EventBus.$on("addedToFavorites", callback);
 
 export default {
   name: "FavoriteMoviesList",
