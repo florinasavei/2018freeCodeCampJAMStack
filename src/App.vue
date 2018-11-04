@@ -2,8 +2,8 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>FCC</span>
-        <span class="font-weight-light">MOVIE APP</span>
+        <span><img height="20" width="30" src="http://www.stickpng.com/assets/images/5847f91ccef1014c0b5e48b8.png"></span>
+        <span class="font-weight-light"> MOVIE APP</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
     <div>
