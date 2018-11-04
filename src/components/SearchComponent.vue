@@ -202,6 +202,7 @@ export default {
         .then(response => {
           EventBus.$emit("addedToFavorites", this.clickCount);
         });
+        
     },
     submitForm: function(event) {
       this.getData();
