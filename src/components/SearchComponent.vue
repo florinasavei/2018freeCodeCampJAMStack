@@ -84,7 +84,6 @@
 
                         <v-card-text>
                           <h1>{{currentMovieData.Title}}</h1>
-                          <p>{{currentMovieData.Plot}}</p>
                           <p>{{currentMovieData.Plot == "N/A"? '' : currentMovieData.Plot}}</p>
                         </v-card-text>
 
@@ -134,7 +133,7 @@
         favoriteMoviesList : this.$store.state.myFavoriteMovies,
         dialog: false,
         currentMovieData: {},
-        currentMovieRating: 7
+        currentMovieRating: 0
       }
     },
     methods: {
@@ -153,6 +152,7 @@
         axios.get('https://www.omdbapi.com/?i=' + movieId + '&apikey=93d8cda4')
           .then((response) => {
             this.currentMovieData = response.data;
+            this.currentMovieRating = response.data.Ratings[0]? parseInt(response.data.Ratings[0].Value.substring(0, 3)) : 0;
           });
       },
       checkDupicate: function(imdbID){
