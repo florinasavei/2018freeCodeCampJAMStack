@@ -41,7 +41,7 @@
                           <div class="text-xs-center">
                             <v-chip>
                               <v-icon left>fas fa-plus-circle</v-icon>
-                              Add to favorites
+                              Add to favorites!
                             </v-chip>
                           </div>
                           </button>
