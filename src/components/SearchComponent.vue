@@ -36,7 +36,7 @@
                     />
                     <img v-else-if="movie.Poster==='N/A'" src="http://www.ussimpervious.com/MSO-449files/mso-449b.jpg"
                          height="150px"/>
-                    <h3 class="text" v-if="movie.Title">{{movie.Title}} - ({{movie.Year}})</h3>
+                    <h3 class="text" v-if="movie.Title">{{movie.Title}}  ({{movie.Year}})</h3>
                     <button v-if="checkDuplicate(movie.imdbID)" id="btn" class="" v-on:click="addToFavorites(movie)">
                           <div class="text-xs-center">
                             <v-chip>
